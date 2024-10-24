@@ -1,4 +1,5 @@
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import path from "path"
 import { fileURLToPath } from 'url';
 
@@ -16,7 +17,8 @@ export default config = {
     plugins: [
         new HtmlWebpackPlugin({
             template: "./public/index.html"
-        })
+        }),
+        new MiniCssExtractPlugin()
     ],
     resolve: {
         modules: [__dirname, "src", "node_modules"],
@@ -33,6 +35,11 @@ export default config = {
                 test: /\.css$/,
                 exclude: /node_modules/,
                 use: ["style-loader", "css-loader"]
+            },
+            {
+                test: /\.s(a|c)ss$/,
+                exclude: /node_modules/,
+                use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"]
             },
             {
                 test: /\.(png|svg|jpg|gif)$/,
